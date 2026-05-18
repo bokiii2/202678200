@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>202678200 곽도은 | AI/SW Vision Portfolio</title>
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        :root {
+            --bg-deep: #64407a;
+            --bg-darker: #1a0f24;
+            --point-lavender: #928cdb;
+            --point-rose: #d4a7be; /* 요청하신 #d4a7be로 변경 */
+            --text-bright: #ffffff;
+            --text-dim: #d1c4d9;
+            --glass: rgba(255, 255, 255, 0.05);
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', sans-serif;
+            scroll-behavior: smooth; /* 부드러운 스크롤 효과 */
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-bright);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Scroll Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--point-lavender), var(--point-rose));
+            width: 0%;
+            z-index: 1001;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 8%;
+            background: rgba(100, 64, 122, 0.85);
+            backdrop-filter: blur(15px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--point-lavender);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            color: var(--point-rose);
+        }
+
+        /* Sections */
+        section {
+            padding: 140px 10% 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, #7b5294 0%, var(--bg-deep) 100%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 6vw, 4rem);
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .hero span {
+            background: linear-gradient(to right, var(--point-lavender), var(--point-rose));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Title Style */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--point-rose);
+        }
+
+        /* Grid & Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 35px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .glass-card:hover {
+            border-color: var(--point-lavender);
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card h3 {
+            color: var(--point-rose);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        /* Timeline Style */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 25px;
+            background: var(--glass);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            width: 14px;
+            height: 14px;
+            background: var(--point-lavender);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            margin-top: 20px;
+            box-shadow: 0 0 10px var(--point-lavender);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 15px 5%; }
+            nav ul { gap: 15px; }
+            nav ul li a { font-size: 0.8rem; }
+            .timeline::before { left: 20px; }
+            .timeline-item { flex-direction: column; }
+            .timeline-content { width: 85%; margin-left: 45px; margin-bottom: 20px; }
+            .timeline-dot { left: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress-bar"></div>
+
+    <nav>
+        <a href="#" class="logo">202678200 곽도은</a>
+        <ul>
+            <li><a href="#jobs">블루오션직무Top3</a></li>
+            <li><a href="#skills">핵심역량</a></li>
+            <li><a href="#roadmap">로드맵</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <h1 class="reveal">2026 IT Visionary<br><span>AI Orchestrator</span></h1>
+        <p class="reveal">202678200 곽도은의 커리어 포트폴리오입니다.<br>기술과 인간의 고유성을 결합하여 미래 시장을 선도합니다.</p>
+    </section>
+
+    <!-- 섹션 1: 블루오션직무Top3 -->
+    <section id="jobs">
+        <h2 class="section-title reveal">블루오션직무Top3</h2>
+        <div class="grid">
+            <div class="glass-card reveal">
+                <h3>AI 에이전트 오케스트레이터</h3>
+                <p>복잡한 비즈니스 프로세스를 스스로 처리하는 다중 에이전트 AI를 설계하고 조율하는 핵심 전문가입니다.</p>
+            </div>
+            <div class="glass-card reveal">
+                <h3>AI 보안 및 거버넌스 전문가</h3>
+                <p>AI 특유의 보안 위험을 방어하고 윤리적 가드레일을 설계하여 기업의 디지털 신뢰를 지키는 선봉장입니다.</p>
+            </div>
+            <div class="glass-card reveal">
+                <h3>도메인 특화 AI 아키텍트</h3>
+                <p>의료, 금융 등 특정 산업에 최적화된 도메인 특화 언어 모델(DSLM)을 설계하고 비즈니스 로직을 구현합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션 2: 핵심역량 -->
+    <section id="skills">
+        <h2 class="section-title reveal">핵심역량</h2>
+        <div class="grid">
+            <div class="glass-card reveal">
+                <h3>AI 협업 및 증강 생산성</h3>
+                <p>Cursor, GitHub Copilot 등 AI 도구를 활용해 업무 생산성을 극대화하고 AI 시스템을 직접 운용하는 역량입니다.</p>
+            </div>
+            <div class="glass-card reveal">
+                <h3>비판적 사고 및 독립적 해결</h3>
+                <p>AI의 결과물에 의존하지 않고 스스로 문제를 정의하며 논리적으로 검증할 수 있는 'AI 프리' 해결 능력입니다.</p>
+            </div>
+            <div class="glass-card reveal">
+                <h3>도메인 융합 및 전략적 사고</h3>
+                <p>기술 스택을 넘어 비즈니스 목표와 산업 특성을 이해하여 AI를 가치 있는 서비스로 전환하는 융합 역량입니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 섹션 3: 로드맵 -->
+    <section id="roadmap">
+        <h2 class="section-title reveal">로드맵</h2>
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <div class="timeline-content">
+                    <h4 style="color:var(--point-lavender)">1학년: AI 네이티브 습관</h4>
+                    <p>CS 기초 역량을 쌓으며 AI 코딩 에이전트를 일상적으로 활용하는 AI-Native 개발자로 거듭납니다.</p>
+                </div>
+                <div class="timeline-dot"></div>
+                <div style="width:45%"></div>
+            </div>
+            <div class="timeline-item reveal" style="flex-direction: row-reverse;">
+                <div class="timeline-content">
+                    <h4 style="color:var(--point-lavender)">2학년: 서버 아키텍처 및 API</h4>
+                    <p>Spring Boot 및 FastAPI를 학습하고 LLM API를 연동한 실전 서비스 구현 능력을 확보합니다.</p>
+                </div>
+                <div class="timeline-dot"></div>
+                <div style="width:45%"></div>
+            </div>
+            <div class="timeline-item reveal">
+                <div class="timeline-content">
+                    <h4 style="color:var(--point-lavender)">3학년: 에이전틱 워크플로 설계</h4>
+                    <p>LangChain, LangGraph를 활용하여 여러 AI가 협업하는 멀티에이전트 시스템 설계 역량을 갖춥니다.</p>
+                </div>
+                <div class="timeline-dot"></div>
+                <div style="width:45%"></div>
+            </div>
+            <div class="timeline-item reveal" style="flex-direction: row-reverse;">
+                <div class="timeline-content">
+                    <h4 style="color:var(--point-lavender)">4학년: 도메인 특화 전문가</h4>
+                    <p>특정 산업 데이터를 활용한 RAG 최적화와 보안이 내재화된 엔드투엔드 AI 시스템을 구축합니다.</p>
+                </div>
+                <div class="timeline-dot"></div>
+                <div style="width:45%"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 50px; text-align: center; color: var(--text-dim); background: var(--bg-darker); border-top: 1px solid rgba(255,255,255,0.05);">
+        <p>202678200곽도은</p>
+    </footer>
+
+    <script>
+        // Scroll Progress Bar
+        window.onscroll = function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // Scroll Reveal Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
